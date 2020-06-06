@@ -1,9 +1,13 @@
 <?php
 require('Database.php');
-//$db = Database::getInstance();
-//$mysqli = $db->getConnection();
 class DbFunction
 {
+    /** The shared mysqli connection. */
+    private function connection()
+    {
+        return Database::getInstance()->getConnection();
+    }
+
     /**
      * Checks the login id and password of the admin.
      * On success it starts the session and redirects to add-course.php.
@@ -16,8 +20,7 @@ class DbFunction
             echo "<script>alert('Either LoginId or Password is Missing')</script>";
 
         } else {
-            $db = Database::getInstance();
-            $mysqli = $db->getConnection();
+            $mysqli = $this->connection();
             $query = "SELECT password FROM tbl_login where loginid=?";
             $stmt = $mysqli->prepare($query);
             if (false === $stmt) {
@@ -70,8 +73,7 @@ class DbFunction
         } else {
 
 
-            $db = Database::getInstance();
-            $mysqli = $db->getConnection();
+            $mysqli = $this->connection();
             $query = "insert into tbl_course(cshort,cfull,cdate)values(?,?,?)";
             $stmt = $mysqli->prepare($query);
             if (false === $stmt) {
@@ -92,8 +94,7 @@ class DbFunction
     public function showCourse()
     {
 
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
         $query = "SELECT * FROM tbl_course ";
         $stmt = $mysqli->query($query);
         return $stmt;
@@ -104,8 +105,7 @@ class DbFunction
     public function showCourse1($cid)
     {
 
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
         $stmt = $mysqli->prepare("SELECT * FROM tbl_course where cid=?");
         $stmt->bind_param('s', $cid);
         $stmt->execute();
@@ -117,8 +117,7 @@ class DbFunction
     public function showSubject()
     {
 
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
         $query = "SELECT * FROM subject ";
         $stmt = $mysqli->query($query);
         return $stmt;
@@ -130,8 +129,7 @@ class DbFunction
     public function showSession()
     {
 
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
         $query = "SELECT * FROM session  ";
         $stmt = $mysqli->query($query);
         return $stmt;
@@ -142,8 +140,7 @@ class DbFunction
     public function showSubject1($sid)
     {
 
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
         $stmt = $mysqli->prepare("SELECT * FROM subject where subid=?");
         $stmt->bind_param('s', $sid);
         $stmt->execute();
@@ -167,8 +164,7 @@ class DbFunction
         } else {
 
 
-            $db = Database::getInstance();
-            $mysqli = $db->getConnection();
+            $mysqli = $this->connection();
             $query = "insert into subject(cshort,cfull,sub1,sub2,sub3)values(?,?,?,?,?)";
             $stmt = $mysqli->prepare($query);
             if (false === $stmt) {
@@ -190,8 +186,7 @@ class DbFunction
     public function showCountry()
     {
 
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
         $query = "SELECT * FROM countries ";
         $stmt = $mysqli->query($query);
         return $stmt;
@@ -201,8 +196,7 @@ class DbFunction
     public function showStudents()
     {
 
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
         $query = "SELECT * FROM registration ";
         $stmt = $mysqli->query($query);
         return $stmt;
@@ -213,8 +207,7 @@ class DbFunction
     public function showStudents1($id)
     {
 
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
         $stmt = $mysqli->prepare("SELECT * FROM registration where id=?");
         $stmt->bind_param('s', $id);
         $stmt->execute();
@@ -258,8 +251,7 @@ class DbFunction
         $session
     ) {
 
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
 
         //	echo $session;exit;
         $query = "INSERT INTO `registration` (`course`, `subject`, `fname`, `mname`, `lname`, `gender`, `gname`, `ocp`,
@@ -325,8 +317,7 @@ class DbFunction
     public function edit_course($cshort, $cfull, $udate, $id)
     {
 
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
         //echo $cshort.$cfull.$udate.$id;exit;
         $query = "update tbl_course set cshort=?,cfull=? ,update_date=? where cid=?";
         $stmt = $mysqli->prepare($query);
@@ -343,8 +334,7 @@ class DbFunction
     public function edit_subject($sub1, $sub2, $sub3, $udate, $id)
     {
 
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
         $query = "update subject set sub1=?,sub2=? ,sub3=?,update_date=? where subid=?";
         $stmt = $mysqli->prepare($query);
         $stmt->bind_param('ssssi', $sub1, $sub2, $sub3, $udate, $id);
@@ -391,8 +381,7 @@ class DbFunction
         $id
     ) {
         // echo $id;exit;
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
         $query = "update registration set course=?,subject=?,fname=?,mname=?,lname=?,gender=?,gname=?,ocp=?
               , income=?,category=?,pchal=?,nationality=?,mobno=?,emailid=?,country=?,state=?,dist=?
          	 ,padd=?,cadd=?,board=?,roll=?,pyear=?,sub=?,marks=?,fmarks=?,board1=?,roll1=?,yop1=?,sub1=?
@@ -463,8 +452,7 @@ class DbFunction
     {
 
         //  echo $id;exit;
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
         $query = "delete from tbl_course where cid=?";
         $stmt = $mysqli->prepare($query);
         $stmt->bind_param('s', $id);
@@ -477,8 +465,7 @@ class DbFunction
     public function del_std($id)
     {
 
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
         $query = "delete from registration where id=?";
         $stmt = $mysqli->prepare($query);
         $stmt->bind_param('i',$id);
@@ -493,8 +480,7 @@ class DbFunction
     {
 
         //echo $id;exit;
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
+        $mysqli = $this->connection();
         $query = "delete from subject where subid=?";
         $stmt = $mysqli->prepare($query);
         $stmt->bind_param('i',$id);
