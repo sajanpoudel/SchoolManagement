@@ -8,6 +8,17 @@ class DbFunction
         return Database::getInstance()->getConnection();
     }
 
+    /** Prepares a statement and stops with the MySQL error when the query is invalid. */
+    private function prepare($query)
+    {
+        $mysqli = $this->connection();
+        $stmt = $mysqli->prepare($query);
+        if (false === $stmt) {
+            trigger_error("Error in query: " . $mysqli->error, E_USER_ERROR);
+        }
+        return $stmt;
+    }
+
     /**
      * Checks the login id and password of the admin.
      * On success it starts the session and redirects to add-course.php.
@@ -20,28 +31,22 @@ class DbFunction
             echo "<script>alert('Either LoginId or Password is Missing')</script>";
 
         } else {
-            $mysqli = $this->connection();
             $query = "SELECT password FROM tbl_login where loginid=?";
-            $stmt = $mysqli->prepare($query);
-            if (false === $stmt) {
+            $stmt = $this->prepare($query);
 
-                trigger_error("Error in query: " . mysqli_connect_error(), E_USER_ERROR);
+            $stmt->bind_param('s', $loginid);
+            $stmt->execute();
+            $stmt->bind_result($storedPassword);
+            $rs = $stmt->fetch();
+            if (!$rs || !$this->passwordMatches($password, $storedPassword)) {
+                echo "<script>alert('Invalid Details')</script>";
+                header('location:login.php');
             } else {
 
-                $stmt->bind_param('s', $loginid);
-                $stmt->execute();
-                $stmt->bind_result($storedPassword);
-                $rs = $stmt->fetch();
-                if (!$rs || !$this->passwordMatches($password, $storedPassword)) {
-                    echo "<script>alert('Invalid Details')</script>";
-                    header('location:login.php');
-                } else {
-
-                    // Only a successful login may start the admin session
-                    $_SESSION['login'] = $loginid;
-                    header('location:add-course.php');
-                    exit;
-                }
+                // Only a successful login may start the admin session
+                $_SESSION['login'] = $loginid;
+                header('location:add-course.php');
+                exit;
             }
 
         }
@@ -73,20 +78,13 @@ class DbFunction
         } else {
 
 
-            $mysqli = $this->connection();
             $query = "insert into tbl_course(cshort,cfull,cdate)values(?,?,?)";
-            $stmt = $mysqli->prepare($query);
-            if (false === $stmt) {
+            $stmt = $this->prepare($query);
 
-                trigger_error("Error in query: " . mysqli_connect_error(), E_USER_ERROR);
-            } else {
-
-                $stmt->bind_param('sss', $cshort, $cfull, $cdate);
-                $stmt->execute();
-                echo "<script>alert('Course Added Successfully')</script>";
-                //header('location:login.php');
-
-            }
+            $stmt->bind_param('sss', $cshort, $cfull, $cdate);
+            $stmt->execute();
+            echo "<script>alert('Course Added Successfully')</script>";
+            //header('location:login.php');
         }
     }
 
@@ -105,8 +103,7 @@ class DbFunction
     public function showCourse1($cid)
     {
 
-        $mysqli = $this->connection();
-        $stmt = $mysqli->prepare("SELECT * FROM tbl_course where cid=?");
+        $stmt = $this->prepare("SELECT * FROM tbl_course where cid=?");
         $stmt->bind_param('s', $cid);
         $stmt->execute();
         return $stmt->get_result();
@@ -140,8 +137,7 @@ class DbFunction
     public function showSubject1($sid)
     {
 
-        $mysqli = $this->connection();
-        $stmt = $mysqli->prepare("SELECT * FROM subject where subid=?");
+        $stmt = $this->prepare("SELECT * FROM subject where subid=?");
         $stmt->bind_param('s', $sid);
         $stmt->execute();
         return $stmt->get_result();
@@ -164,20 +160,12 @@ class DbFunction
         } else {
 
 
-            $mysqli = $this->connection();
             $query = "insert into subject(cshort,cfull,sub1,sub2,sub3)values(?,?,?,?,?)";
-            $stmt = $mysqli->prepare($query);
-            if (false === $stmt) {
+            $stmt = $this->prepare($query);
 
-                trigger_error("Error in query: " . mysqli_connect_error(), E_USER_ERROR);
-            } else {
-
-                $stmt->bind_param('sssss', $cshort, $cfull, $sub1, $sub2, $sub3);
-                $stmt->execute();
-                echo "<script>alert('Course Added Successfully')</script>";
-
-
-            }
+            $stmt->bind_param('sssss', $cshort, $cfull, $sub1, $sub2, $sub3);
+            $stmt->execute();
+            echo "<script>alert('Course Added Successfully')</script>";
         }
     }
 
@@ -207,8 +195,7 @@ class DbFunction
     public function showStudents1($id)
     {
 
-        $mysqli = $this->connection();
-        $stmt = $mysqli->prepare("SELECT * FROM registration where id=?");
+        $stmt = $this->prepare("SELECT * FROM registration where id=?");
         $stmt->bind_param('s', $id);
         $stmt->execute();
         return $stmt->get_result();
@@ -251,7 +238,6 @@ class DbFunction
         $session
     ) {
 
-        $mysqli = $this->connection();
 
         //	echo $session;exit;
         $query = "INSERT INTO `registration` (`course`, `subject`, `fname`, `mname`, `lname`, `gender`, `gname`, `ocp`,
@@ -260,53 +246,47 @@ class DbFunction
 					 `fmarks`,`fmarks1`,`session`,regno) 
                    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $reg = rand();
-        $stmt = $mysqli->prepare($query);
-        if (false === $stmt) {
+        $stmt = $this->prepare($query);
 
-            trigger_error("Error in query: " . mysqli_connect_error(), E_USER_ERROR);
-        } else {
-
-            $stmt->bind_param(
-                'sssssssssssssssssssssssssssssssss',
-                $cshort,
-                $cfull,
-                $fname,
-                $mname,
-                $lname,
-                $gender,
-                $gname,
-                $ocp,
-                $income,
-                $category,
-                $ph,
-                $nation,
-                $mobno,
-                $email,
-                $country,
-                $state,
-                $city,
-                $padd,
-                $cadd,
-                $board1,
-                $board2,
-                $roll1,
-                $roll2,
-                $pyear1,
-                $pyear2,
-                $sub1,
-                $sub2,
-                $marks1,
-                $marks2,
-                $fmarks1,
-                $fmarks2,
-                $session,
-                $reg
-            );
-            $stmt->execute();
-            echo "<script>alert('Successfully Registered , your registration number is $reg')</script>";
-            //header('location:login.php');
-
-        }
+        $stmt->bind_param(
+            'sssssssssssssssssssssssssssssssss',
+            $cshort,
+            $cfull,
+            $fname,
+            $mname,
+            $lname,
+            $gender,
+            $gname,
+            $ocp,
+            $income,
+            $category,
+            $ph,
+            $nation,
+            $mobno,
+            $email,
+            $country,
+            $state,
+            $city,
+            $padd,
+            $cadd,
+            $board1,
+            $board2,
+            $roll1,
+            $roll2,
+            $pyear1,
+            $pyear2,
+            $sub1,
+            $sub2,
+            $marks1,
+            $marks2,
+            $fmarks1,
+            $fmarks2,
+            $session,
+            $reg
+        );
+        $stmt->execute();
+        echo "<script>alert('Successfully Registered , your registration number is $reg')</script>";
+        //header('location:login.php');
 
 
 
@@ -317,10 +297,9 @@ class DbFunction
     public function edit_course($cshort, $cfull, $udate, $id)
     {
 
-        $mysqli = $this->connection();
         //echo $cshort.$cfull.$udate.$id;exit;
         $query = "update tbl_course set cshort=?,cfull=? ,update_date=? where cid=?";
-        $stmt = $mysqli->prepare($query);
+        $stmt = $this->prepare($query);
         $stmt->bind_param('sssi', $cshort, $cfull, $udate, $id);
         $stmt->execute();
         echo '<script>';
@@ -334,9 +313,8 @@ class DbFunction
     public function edit_subject($sub1, $sub2, $sub3, $udate, $id)
     {
 
-        $mysqli = $this->connection();
         $query = "update subject set sub1=?,sub2=? ,sub3=?,update_date=? where subid=?";
-        $stmt = $mysqli->prepare($query);
+        $stmt = $this->prepare($query);
         $stmt->bind_param('ssssi', $sub1, $sub2, $sub3, $udate, $id);
         $stmt->execute();
         echo '<script>';
@@ -381,13 +359,12 @@ class DbFunction
         $id
     ) {
         // echo $id;exit;
-        $mysqli = $this->connection();
         $query = "update registration set course=?,subject=?,fname=?,mname=?,lname=?,gender=?,gname=?,ocp=?
               , income=?,category=?,pchal=?,nationality=?,mobno=?,emailid=?,country=?,state=?,dist=?
          	 ,padd=?,cadd=?,board=?,roll=?,pyear=?,sub=?,marks=?,fmarks=?,board1=?,roll1=?,yop1=?,sub1=?
               ,marks1=?,fmarks1=? where id=?" ;
         //echo $query;
-        $stmt = $mysqli->prepare($query);
+        $stmt = $this->prepare($query);
         if (false === $stmt) {
 
             trigger_error("Error in query: " . mysqli_connect_error(), E_USER_ERROR);
@@ -452,9 +429,8 @@ class DbFunction
     {
 
         //  echo $id;exit;
-        $mysqli = $this->connection();
         $query = "delete from tbl_course where cid=?";
-        $stmt = $mysqli->prepare($query);
+        $stmt = $this->prepare($query);
         $stmt->bind_param('s', $id);
         $stmt->execute();
         echo "<script>alert('Course has been deleted')</script>";
@@ -465,9 +441,8 @@ class DbFunction
     public function del_std($id)
     {
 
-        $mysqli = $this->connection();
         $query = "delete from registration where id=?";
-        $stmt = $mysqli->prepare($query);
+        $stmt = $this->prepare($query);
         $stmt->bind_param('i',$id);
         $stmt->execute();
         echo "<script>alert('One record has been deleted')</script>";
@@ -480,9 +455,8 @@ class DbFunction
     {
 
         //echo $id;exit;
-        $mysqli = $this->connection();
         $query = "delete from subject where subid=?";
-        $stmt = $mysqli->prepare($query);
+        $stmt = $this->prepare($query);
         $stmt->bind_param('i',$id);
         $stmt->execute();
         echo "<script>alert('Subject has been deleted')</script>";
