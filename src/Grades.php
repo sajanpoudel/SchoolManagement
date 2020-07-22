@@ -9,3 +9,21 @@ function percentage($obtained, $full)
     }
     return round(($obtained / $full) * 100, 2);
 }
+
+/** Letter grade for a percentage: A from 80, B from 65, C from 50, D from 40, otherwise F. */
+function gradeFor($percentage)
+{
+    if ($percentage >= 80) {
+        return 'A';
+    }
+    if ($percentage >= 65) {
+        return 'B';
+    }
+    if ($percentage >= 50) {
+        return 'C';
+    }
+    if ($percentage >= 40) {
+        return 'D';
+    }
+    return 'F';
+}
