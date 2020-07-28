@@ -239,7 +239,6 @@ class DbFunction
     ) {
 
 
-        //	echo $session;exit;
         $query = "INSERT INTO `registration` (`course`, `subject`, `fname`, `mname`, `lname`, `gender`, `gname`, `ocp`,
                      `income`, `category`, `pchal`, `nationality`, `mobno`, `emailid`, `country`, `state`, `dist`, 
 					 `padd`, `cadd`, `board`, `board1`,`roll`,`roll1`,`pyear`,`yop1`,`sub`,`sub1`,`marks`,`marks1`,
@@ -297,7 +296,6 @@ class DbFunction
     public function edit_course($cshort, $cfull, $udate, $id)
     {
 
-        //echo $cshort.$cfull.$udate.$id;exit;
         $query = "update tbl_course set cshort=?,cfull=? ,update_date=? where cid=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('sssi', $cshort, $cfull, $udate, $id);
@@ -358,17 +356,11 @@ class DbFunction
         $fmarks2,
         $id
     ) {
-        // echo $id;exit;
         $query = "update registration set course=?,subject=?,fname=?,mname=?,lname=?,gender=?,gname=?,ocp=?
               , income=?,category=?,pchal=?,nationality=?,mobno=?,emailid=?,country=?,state=?,dist=?
          	 ,padd=?,cadd=?,board=?,roll=?,pyear=?,sub=?,marks=?,fmarks=?,board1=?,roll1=?,yop1=?,sub1=?
               ,marks1=?,fmarks1=? where id=?" ;
-        //echo $query;
         $stmt = $this->prepare($query);
-        if (false === $stmt) {
-
-            trigger_error("Error in query: " . mysqli_connect_error(), E_USER_ERROR);
-        }
 
         $rc = $stmt->bind_param(
             'sssssssssssssssssssssssssssssssi',
@@ -406,7 +398,6 @@ class DbFunction
             $id
         );
 
-        //echo $rc;
         if (false === $rc) {
 
             die('bind_param() failed: ' . htmlspecialchars($stmt->error));
@@ -428,7 +419,6 @@ class DbFunction
     public function del_course($id)
     {
 
-        //  echo $id;exit;
         $query = "delete from tbl_course where cid=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('s', $id);
@@ -454,7 +444,6 @@ class DbFunction
     public function del_subject($id)
     {
 
-        //echo $id;exit;
         $query = "delete from subject where subid=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$id);
