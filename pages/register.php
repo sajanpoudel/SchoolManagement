@@ -193,7 +193,7 @@ if (isset($_POST['submit']) && empty($formErrors)) {
 			</div>
 			<div class="col-lg-4">
 		 <input type="radio" name="gender" id="male" value="Male">Male</input>   
-		 <input type="radio" name="gender" id="female" value="feale">    Female   </input>  
+		 <input type="radio" name="gender" id="female" value="female">    Female   </input>  
 		 <input type="radio" name="gender" id="other" value="other">    Other   </input>  
 			</div>
 			</div>	
