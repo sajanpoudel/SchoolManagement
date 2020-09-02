@@ -27,3 +27,17 @@ function gradeFor($percentage)
     }
     return 'F';
 }
+
+/** True when every subject reached the pass mark (40 percent unless another one is given). */
+function hasPassed(array $percentages, $passMark = 40)
+{
+    if (count($percentages) === 0) {
+        return false;
+    }
+    foreach ($percentages as $value) {
+        if ($value < $passMark) {
+            return false;
+        }
+    }
+    return true;
+}
