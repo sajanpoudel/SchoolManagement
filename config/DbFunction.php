@@ -8,6 +8,18 @@ class DbFunction
         return Database::getInstance()->getConnection();
     }
 
+    /** Shows a message to the user. The text is encoded so it cannot break out of the script. */
+    private function alert($message)
+    {
+        echo '<script>alert(' . json_encode($message, JSON_HEX_TAG | JSON_HEX_AMP) . ')</script>';
+    }
+
+    /** Sends the browser to another page once the current output is done. */
+    private function redirect($url)
+    {
+        echo '<script>window.location.href=' . json_encode($url, JSON_HEX_TAG | JSON_HEX_AMP) . '</script>';
+    }
+
     /** Prepares a statement and stops with the MySQL error when the query is invalid. */
     private function prepare($query)
     {
@@ -28,7 +40,7 @@ class DbFunction
 
         if (!ctype_alpha($loginid) || !ctype_alpha($password)) {
 
-            echo "<script>alert('Either LoginId or Password is Missing')</script>";
+            $this->alert('Either LoginId or Password is Missing');
 
         } else {
             $query = "SELECT password FROM tbl_login where loginid=?";
@@ -39,7 +51,7 @@ class DbFunction
             $stmt->bind_result($storedPassword);
             $rs = $stmt->fetch();
             if (!$rs || !$this->passwordMatches($password, $storedPassword)) {
-                echo "<script>alert('Invalid Details')</script>";
+                $this->alert('Invalid Details');
                 header('location:login.php');
             } else {
 
@@ -69,11 +81,11 @@ class DbFunction
 
         if ($cshort == "") {
 
-            echo "<script>alert('Select  Course Short Name')</script>";
+            $this->alert('Select Course Short Name');
 
         } elseif ($cfull == "") {
 
-            echo "<script>alert('Select  Course Full Name')</script>";
+            $this->alert('Select Course Full Name');
 
         } else {
 
@@ -83,7 +95,7 @@ class DbFunction
 
             $stmt->bind_param('sss', $cshort, $cfull, $cdate);
             $stmt->execute();
-            echo "<script>alert('Course Added Successfully')</script>";
+            $this->alert('Course Added Successfully');
             //header('location:login.php');
         }
     }
@@ -151,11 +163,11 @@ class DbFunction
 
         if ($cshort == "") {
 
-            echo "<script>alert('Select  Course Short Name')</script>";
+            $this->alert('Select Course Short Name');
 
         } elseif ($cfull == "") {
 
-            echo "<script>alert('Select  Course Full Name')</script>";
+            $this->alert('Select Course Full Name');
 
         } else {
 
@@ -165,7 +177,7 @@ class DbFunction
 
             $stmt->bind_param('sssss', $cshort, $cfull, $sub1, $sub2, $sub3);
             $stmt->execute();
-            echo "<script>alert('Course Added Successfully')</script>";
+            $this->alert('Course Added Successfully');
         }
     }
 
@@ -284,7 +296,7 @@ class DbFunction
             $reg
         );
         $stmt->execute();
-        echo "<script>alert('Successfully Registered , your registration number is $reg')</script>";
+        $this->alert("Successfully registered, your registration number is $reg");
         //header('location:login.php');
 
 
@@ -300,9 +312,7 @@ class DbFunction
         $stmt = $this->prepare($query);
         $stmt->bind_param('sssi', $cshort, $cfull, $udate, $id);
         $stmt->execute();
-        echo '<script>';
-        echo 'alert("Course Updated Successfully")';
-        echo '</script>';
+        $this->alert('Course Updated Successfully');
 
     }
 
@@ -315,9 +325,7 @@ class DbFunction
         $stmt = $this->prepare($query);
         $stmt->bind_param('ssssi', $sub1, $sub2, $sub3, $udate, $id);
         $stmt->execute();
-        echo '<script>';
-        echo 'alert("Subject Updated Successfully")';
-        echo '</script>';
+        $this->alert('Subject Updated Successfully');
 
     }
 
@@ -407,9 +415,7 @@ class DbFunction
         if (false == $rc) {
             die('execute() failed: ' . htmlspecialchars($stmt->error));
         } else {
-            echo '<script>';
-            echo 'alert(" Successfully Updated")';
-            echo '</script>';
+            $this->alert('Successfully Updated');
         }
 
     }
@@ -423,8 +429,8 @@ class DbFunction
         $stmt = $this->prepare($query);
         $stmt->bind_param('s', $id);
         $stmt->execute();
-        echo "<script>alert('Course has been deleted')</script>";
-        echo "<script>window.location.href='view-course.php'</script>";
+        $this->alert('Course has been deleted');
+        $this->redirect('view-course.php');
     }
 
     /** Deletes a student record. */
@@ -435,8 +441,8 @@ class DbFunction
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$id);
         $stmt->execute();
-        echo "<script>alert('One record has been deleted')</script>";
-        echo "<script>window.location.href='view-course.php'</script>";
+        $this->alert('One record has been deleted');
+        $this->redirect('view-course.php');
 
     }
 
@@ -448,8 +454,8 @@ class DbFunction
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$id);
         $stmt->execute();
-        echo "<script>alert('Subject has been deleted')</script>";
-        // echo "<script>window.location.href='view-course.php'</script>";
+        $this->alert('Subject has been deleted');
+        // $this->redirect('view-course.php');
     }
 
 }
