@@ -96,7 +96,6 @@ class DbFunction
             $stmt->bind_param('sss', $cshort, $cfull, $cdate);
             $stmt->execute();
             $this->alert('Course Added Successfully');
-            //header('location:login.php');
         }
     }
 
@@ -177,7 +176,7 @@ class DbFunction
 
             $stmt->bind_param('sssss', $cshort, $cfull, $sub1, $sub2, $sub3);
             $stmt->execute();
-            $this->alert('Course Added Successfully');
+            $this->alert('Subject Added Successfully');
         }
     }
 
@@ -297,7 +296,6 @@ class DbFunction
         );
         $stmt->execute();
         $this->alert("Successfully registered, your registration number is $reg");
-        //header('location:login.php');
 
 
 
@@ -442,7 +440,7 @@ class DbFunction
         $stmt->bind_param('i',$id);
         $stmt->execute();
         $this->alert('One record has been deleted');
-        $this->redirect('view-course.php');
+        $this->redirect('view.php');
 
     }
 
@@ -455,7 +453,7 @@ class DbFunction
         $stmt->bind_param('i',$id);
         $stmt->execute();
         $this->alert('Subject has been deleted');
-        // $this->redirect('view-course.php');
+        $this->redirect('view-subject.php');
     }
 
 }
