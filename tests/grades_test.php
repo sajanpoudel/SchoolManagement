@@ -11,3 +11,4 @@ check('50 to 64 is a C', gradeFor(50) === 'C' && gradeFor(64.9) === 'C');
 check('40 to 49 is a D', gradeFor(40) === 'D' && gradeFor(49.99) === 'D');
 check('below 40 is an F', gradeFor(39.99) === 'F' && gradeFor(0) === 'F');
 check('passing every subject passes', hasPassed([40, 55, 90]) === true);
+check('one failed subject fails', hasPassed([90, 39.9, 80]) === false);
