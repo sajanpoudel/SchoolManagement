@@ -101,9 +101,8 @@ while ($res = $rs->fetch_object()) {
       <td><?php echo htmlentities(strtoupper($res->subject));?></td>											  
       <td>&nbsp;&nbsp;<a href="edit-std.php?id=<?php echo htmlentities($res->id);?>">
 	  <p class="fa fa-edit"></p></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <a href="view.php?del=<?php echo htmlentities($res->id); ?>">
-	  <p class="fa fa-times-circle"></p>
-	  
+      <a href="view.php?del=<?php echo htmlentities($res->id); ?>" onclick="return confirm('Delete this student?');">
+	  <p class="fa fa-times-circle"></p></a>
 	  </td>
                                             
                                         </tr>
