@@ -1,62 +1,30 @@
 <?php
-$dbuser = "root";
-$dbpass = "";
-$host = "localhost";
-$dbname = "schoolmanagement";
-$mysqli = new mysqli($host, $dbuser, $dbpass, $dbname);
-if (!empty($_POST['cshort'])) {
-    $cshort = $_POST['cshort'];
-    $result = "SELECT count(*) FROM tbl_course WHERE cshort=?";
-    $stmt = $mysqli->prepare($result);
-    $stmt->bind_param('s', $cshort);
+require_once('../config/Database.php');
+
+$mysqli = Database::getInstance()->getConnection();
+
+// Tables and columns the form fields may ask about. The names go into the query text, so they come from this list only.
+$checks = [
+    'cshort'  => ['tbl_course', 'cshort', 'Course Short Name'],
+    'cshort1' => ['subject', 'cshort', 'Course Short Name'],
+    'cfull'   => ['tbl_course', 'cfull', 'Course Full Name'],
+    'cfull1'  => ['subject', 'cfull', 'Course Full Name'],
+];
+
+/** True when a row of $table already has $value in $column. */
+function valueExists($mysqli, $table, $column, $value)
+{
+    $stmt = $mysqli->prepare("SELECT count(*) FROM $table WHERE $column=?");
+    $stmt->bind_param('s', $value);
     $stmt->execute();
     $stmt->bind_result($count);
     $stmt->fetch();
     $stmt->close();
-    if ($count > 0) {
-        echo "<span style='color:red'> Course Short Name Already Exist .</span>";
-    }
-}
-if (!empty($_POST['cshort1'])) {
-    $cshort = $_POST['cshort1'];
-    $result = "SELECT count(*) FROM  subject WHERE cshort=?";
-    $stmt = $mysqli->prepare($result);
-    $stmt->bind_param('s', $cshort);
-    $stmt->execute();
-    $stmt->bind_result($count);
-    $stmt->fetch();
-    $stmt->close();
-    if ($count > 0) {
-        echo "<span style='color:red'> Course Short Name Already Exist .</span>";
-    }
+    return $count > 0;
 }
 
-if (!empty($_POST['cfull'])) {
-    $cfull = $_POST['cfull'];
-    $result = "SELECT count(*) FROM tbl_course WHERE cfull=?";
-    $stmt = $mysqli->prepare($result);
-    $stmt->bind_param('s', $cfull);
-    $stmt->execute();
-    $stmt->bind_result($count);
-    $stmt->fetch();
-    $stmt->close();
-    if ($count > 0) {
-        echo "<span style='color:red'> Course Full Name Already Exist .</span>";
+foreach ($checks as $field => [$table, $column, $label]) {
+    if (!empty($_POST[$field]) && valueExists($mysqli, $table, $column, $_POST[$field])) {
+        echo "<span style='color:red'> $label Already Exist .</span>";
     }
 }
-
-if (!empty($_POST['cfull1'])) {
-    $cfull = $_POST['cfull1'];
-    $result = "SELECT count(*) FROM subject WHERE cfull=?";
-    $stmt = $mysqli->prepare($result);
-    $stmt->bind_param('s', $cfull);
-    $stmt->execute();
-    $stmt->bind_result($count);
-    $stmt->fetch();
-    $stmt->close();
-    if ($count > 0) {
-        echo "<span style='color:red'> Course Full Name Already Exist .</span>";
-    }
-}
-?>
-
