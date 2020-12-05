@@ -1,11 +1,8 @@
 <?php
 session_start();
+require_once('../src/Auth.php');
 
-if (! (isset($_SESSION ['login']))) {
-
-    header('location:../index.php');
-    exit;
-}
+requireLogin();
 
 if (isset($_POST['submit'])) {
 

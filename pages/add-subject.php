@@ -1,14 +1,11 @@
 <?php
 session_start();
+require_once('../src/Auth.php');
 include('../config/DbFunction.php');
 $obj = new DbFunction();
 $rs = $obj->showCourse();
 $rs1 = $obj->showCourse();
-if (! (isset($_SESSION ['login']))) {
-
-    header('location:../index.php');
-    exit;
-}
+requireLogin();
 if (isset($_POST['submit'])) {
 
     $obj = new DbFunction();

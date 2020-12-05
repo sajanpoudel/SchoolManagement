@@ -1,12 +1,9 @@
 <?php
 session_start();
+require_once('../src/Auth.php');
+requireLogin();
 include('../config/DbFunction.php');
 $obj = new DbFunction();
-if (! (isset($_SESSION ['login']))) {
-
-    header('location:../index.php');
-    exit;
-}
 
 $id = intval($_GET['sid'] ?? 0);
 
