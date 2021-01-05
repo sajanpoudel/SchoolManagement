@@ -1,11 +1,8 @@
 <?php
 session_start();
+require_once('../src/Auth.php');
 
-if (! (isset($_SESSION ['login']))) {
-
-    header('location:../index.php');
-    exit;
-}
+requireLogin();
 include('../config/DbFunction.php');
 include('../src/Validation.php');
 include('../src/Student.php');
