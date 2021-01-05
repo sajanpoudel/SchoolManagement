@@ -55,7 +55,8 @@ class DbFunction
                 header('location:login.php');
             } else {
 
-                // Only a successful login may start the admin session
+                // Only a successful login may start the admin session, under a fresh session id
+                session_regenerate_id(true);
                 $_SESSION['login'] = $loginid;
                 header('location:add-course.php');
                 exit;
