@@ -13,3 +13,4 @@ check('below 40 is an F', gradeFor(39.99) === 'F' && gradeFor(0) === 'F');
 check('passing every subject passes', hasPassed([40, 55, 90]) === true);
 check('one failed subject fails', hasPassed([90, 39.9, 80]) === false);
 check('no subjects is not a pass', hasPassed([]) === false);
+check('the pass mark can be changed', hasPassed([45, 50], 50) === false && hasPassed([50, 60], 50) === true);
