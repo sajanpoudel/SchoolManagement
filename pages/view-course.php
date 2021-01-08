@@ -90,7 +90,7 @@ while ($res = $rs->fetch_object()) {?>
                                             <td><?php echo htmlentities(strtoupper($res->cfull));?></td>
                                             <td><?php echo htmlentities($res->cdate);?></td>
                                              <td>&nbsp;&nbsp;<a href="edit-course.php?cid=<?php echo htmlentities($res->cid);?>"><p class="fa fa-edit"></p></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                             <a href="view-course.php?del=<?php echo htmlentities($res->cid); ?>"> <p class="fa fa-times-circle"></p></td>
+                                             <a href="view-course.php?del=<?php echo htmlentities($res->cid); ?>" onclick="return confirm('Delete this course?');"> <p class="fa fa-times-circle"></p></a></td>
                                             
                                         </tr>
                                         
