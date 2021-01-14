@@ -10,15 +10,17 @@ if (! (isset($_SESSION ['login']))) {
     exit;
 }
 
-$id = $_GET['cid'];
+$id = intval($_GET['cid'] ?? 0);
 
 $rs = $obj->showCourse1($id);
 $res = $rs->fetch_object();
+if (!$res) {
+    header('location:view-course.php');
+    exit;
+}
 
 if (isset($_POST['submit'])) {
 
-    // echo  $id=$_GET['cid'];exit;
-    //echo $_POST['course-short'].$_POST['course-full'].$_POST['udate'].$id;exit;
     $obj->edit_course($_POST['course-short'], $_POST['course-full'], $_POST['udate'], $id);
 
 }
