@@ -41,3 +41,27 @@ function hasPassed(array $percentages, $passMark = 40)
     }
     return true;
 }
+
+/**
+ * Summary of a result: total, percentage, grade and the pass decision.
+ * $marks is a list of [obtained, full] pairs, one for each subject.
+ */
+function summarize(array $marks)
+{
+    $obtained = 0;
+    $full = 0;
+    $percentages = [];
+    foreach ($marks as $pair) {
+        $obtained += $pair[0];
+        $full += $pair[1];
+        $percentages[] = percentage($pair[0], $pair[1]);
+    }
+    $overall = percentage($obtained, $full);
+    return [
+        'obtained' => $obtained,
+        'full' => $full,
+        'percentage' => $overall,
+        'grade' => gradeFor($overall),
+        'passed' => hasPassed($percentages),
+    ];
+}
