@@ -14,3 +14,5 @@ check('passing every subject passes', hasPassed([40, 55, 90]) === true);
 check('one failed subject fails', hasPassed([90, 39.9, 80]) === false);
 check('no subjects is not a pass', hasPassed([]) === false);
 check('the pass mark can be changed', hasPassed([45, 50], 50) === false && hasPassed([50, 60], 50) === true);
+$summary = summarize([[70, 100], [50, 100], [90, 100]]);
+check('summary adds up the marks', $summary['obtained'] === 210 && $summary['full'] === 300);
