@@ -18,3 +18,5 @@ $summary = summarize([[70, 100], [50, 100], [90, 100]]);
 check('summary adds up the marks', $summary['obtained'] === 210 && $summary['full'] === 300);
 check('summary computes the percentage and grade', $summary['percentage'] === 70.0 && $summary['grade'] === 'B');
 check('summary says passed when every subject passes', $summary['passed'] === true);
+$failing = summarize([[90, 100], [20, 100]]);
+check('a failed subject fails the result even with a high total', $failing['passed'] === false && $failing['grade'] === 'C');
