@@ -20,3 +20,4 @@ check('summary computes the percentage and grade', $summary['percentage'] === 70
 check('summary says passed when every subject passes', $summary['passed'] === true);
 $failing = summarize([[90, 100], [20, 100]]);
 check('a failed subject fails the result even with a high total', $failing['passed'] === false && $failing['grade'] === 'C');
+check('an empty result is an F', summarize([])['grade'] === 'F' && summarize([])['passed'] === false);
