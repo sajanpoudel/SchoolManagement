@@ -104,7 +104,7 @@ while ($res = $rs->fetch_object()) {?>
                                             <td><?php echo htmlentities(strtoupper($res->sub2));?></td>
                                              <td><?php echo htmlentities(strtoupper($res->sub3));?></td>
                                             <td>&nbsp;&nbsp;<a href="edit-sub.php?sid=<?php echo htmlentities($res->subid);?>"><p class="fa fa-edit"></p></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                             <a href="view-subject.php?del=<?php echo htmlentities($res->subid); ?>"> <p class="fa fa-times-circle"></p></td>
+                                             <a href="view-subject.php?del=<?php echo htmlentities($res->subid); ?>" onclick="return confirm('Delete this subject?');"> <p class="fa fa-times-circle"></p></a></td>
                                             
                                         </tr>
                                         
