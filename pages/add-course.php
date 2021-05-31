@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 	<div id="wrapper">
 
 		<!-- Navigation -->
-		<?php include('leftbar.php')?>;
+		<?php include('leftbar.php'); ?>
 
 <!--nav-->
 		<div id="page-wrapper">
