@@ -10,14 +10,17 @@ if (! (isset($_SESSION ['login']))) {
     exit;
 }
 
-$id = $_GET['sid'];
+$id = intval($_GET['sid'] ?? 0);
 
 $rs = $obj->showSubject1($id);
 $res = $rs->fetch_object();
+if (!$res) {
+    header('location:view-subject.php');
+    exit;
+}
 
 if (isset($_POST['submit'])) {
 
-    $id = $_GET['sid'];
     $obj->edit_subject($_POST['sub1'], $_POST['sub2'], $_POST['sub3'], $_POST['udate'], $id);
 
 }
