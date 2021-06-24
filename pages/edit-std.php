@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
 <form method="post" >
 	<div id="wrapper">
 	<!--left !-->
-    <?php include('leftbar.php')?>;
+    <?php include('leftbar.php'); ?>
 	 
 
 		<div id="page-wrapper">
