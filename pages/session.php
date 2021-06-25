@@ -39,7 +39,7 @@ $rs = $obj->showSession();
 
         <!-- Navigation -->
       
-     <?php include('leftbar.php')?>;
+     <?php include('leftbar.php'); ?>
 
            
          <nav>

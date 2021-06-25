@@ -46,7 +46,7 @@ if (isset($_GET['del'])) {
 
         <!-- Navigation -->
       
-     <?php include('leftbar.php')?>;
+     <?php include('leftbar.php'); ?>
 
            
          <nav>
