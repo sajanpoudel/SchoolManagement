@@ -17,19 +17,10 @@ $tiles = [
 ];
 $latest = $obj->latestStudents(5);
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard</title>
-    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
-    <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-</head>
+<?php
+$pageTitle = 'Dashboard';
+include('partials/head.php');
+?>
 
 <body>
 
@@ -38,11 +29,7 @@ $latest = $obj->latestStudents(5);
         <?php include('leftbar.php'); ?>
 
         <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4 class="page-header"> <?php echo strtoupper("welcome" . " " . htmlentities($_SESSION['login'])); ?></h4>
-                </div>
-            </div>
+            <?php include('partials/welcome.php'); ?>
 
             <div class="row">
                 <?php foreach ($tiles as [$label, $total, $icon, $link, $style]) { ?>
@@ -102,10 +89,7 @@ $latest = $obj->latestStudents(5);
 
     </div>
 
-    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
-    <script src="../dist/js/sb-admin-2.js"></script>
+    <?php include('partials/scripts.php'); ?>
 
 </body>
 
