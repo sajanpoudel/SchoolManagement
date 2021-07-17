@@ -121,6 +121,27 @@ class DbFunction
 
     }
 
+    /** Number of rows in one of the tables the dashboard reports on. */
+    public function countRows($table)
+    {
+        $allowed = ['registration', 'tbl_course', 'subject', 'session'];
+        if (!in_array($table, $allowed, true)) {
+            throw new InvalidArgumentException("Unknown table: $table");
+        }
+        $result = $this->connection()->query("SELECT COUNT(*) AS total FROM `$table`");
+        $row = $result->fetch_assoc();
+        return (int) $row['total'];
+    }
+
+    /** The students who registered most recently, newest first. */
+    public function latestStudents($limit = 5)
+    {
+        $stmt = $this->prepare("SELECT id, regno, fname, lname, emailid, course FROM registration ORDER BY id DESC LIMIT ?");
+        $stmt->bind_param('i', $limit);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
     /** Returns every subject row as a mysqli result. */
     public function showSubject()
     {
