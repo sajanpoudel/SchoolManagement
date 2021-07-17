@@ -9,7 +9,7 @@ if (! (isset($_SESSION ['login']))) {
 
 include('../config/DbFunction.php');
 $obj = new DbFunction();
-$rs = $obj->showstudents();
+$rs = $obj->showStudents();
 
 
 if (isset($_GET['del'])) {
@@ -89,6 +89,7 @@ while ($res = $rs->fetch_object()) {
     $c = $res->course;
     $cname = $obj->showCourse1($c);
     $res1 = $cname->fetch_object();
+    $courseName = $res1 ? $res1->cshort : '';
 
     ?>	
                                         <tr class="odd gradeX">
@@ -97,7 +98,7 @@ while ($res = $rs->fetch_object()) {
              <td><?php echo htmlentities(strtoupper($res->fname." ".$res->mname." ".$res->lname));?></td>
        <td><?php echo htmlentities(strtoupper($res->emailid));?></td>
 	  <td><?php echo htmlentities($res->mobno);?></td>
-	  <td><?php echo htmlentities(strtoupper($res1->cshort));?></td>
+	  <td><?php echo htmlentities(strtoupper($courseName));?></td>
       <td><?php echo htmlentities(strtoupper($res->subject));?></td>											  
       <td>&nbsp;&nbsp;<a href="edit-std.php?id=<?php echo htmlentities($res->id);?>">
 	  <p class="fa fa-edit"></p></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
