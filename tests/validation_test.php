@@ -5,3 +5,4 @@ check('a normal email is valid', isValidEmail('student@example.com'));
 check('an email with spaces around it is accepted', isValidEmail('  student@example.com '));
 check('broken emails are rejected', !isValidEmail('') && !isValidEmail('student') && !isValidEmail('a@') && !isValidEmail('@b.com'));
 check('local and international numbers are valid', isValidMobile('9866656576') && isValidMobile('+977 986-665-6576'));
+check('short numbers and letters are invalid', !isValidMobile('12345') && !isValidMobile('98a6656576') && !isValidMobile(''));
