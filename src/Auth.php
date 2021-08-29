@@ -15,3 +15,12 @@ function requireLogin()
         exit;
     }
 }
+
+/** For the AJAX endpoints: answers 401 instead of redirecting, because the caller is a script. */
+function requireLoginAjax()
+{
+    if (!isLoggedIn($_SESSION)) {
+        http_response_code(401);
+        exit;
+    }
+}
