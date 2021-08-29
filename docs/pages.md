@@ -5,6 +5,7 @@
 | `index.php` | Landing page |
 | `pages/login.php` | Admin sign in |
 | `pages/logout.php` | Ends the session |
+| `pages/partials/` | The shared head, welcome line and script tags that the other pages include |
 | `pages/dashboard.php` | Counts of students, courses, subjects and sessions, plus the latest registrations |
 | `pages/add-course.php`, `view-course.php`, `edit-course.php` | Manage courses |
 | `pages/add-subject.php`, `view-subject.php`, `edit-sub.php` | Manage the subjects of a course |
