@@ -1,4 +1,7 @@
 <?php
+session_start();
+require_once('../src/Auth.php');
+requireLoginAjax();
 include('dbcontroller.php');
 if (!empty($_POST["id"])) {
     $id = intval($_POST['id']);
