@@ -19,3 +19,19 @@ function isValidName($name)
     $name = trim((string) $name);
     return strlen($name) >= 2 && strlen($name) <= 60 && preg_match("/^[A-Za-z][A-Za-z .'-]*$/", $name) === 1;
 }
+
+/** Collects the problems of a registration form. Returns a list of messages, empty when all is fine. */
+function registrationErrors(array $form)
+{
+    $errors = [];
+    if (!isValidName($form['fname'] ?? '')) {
+        $errors[] = 'Enter a valid first name.';
+    }
+    if (!isValidEmail($form['email'] ?? '')) {
+        $errors[] = 'Enter a valid email address.';
+    }
+    if (!isValidMobile($form['mobno'] ?? '')) {
+        $errors[] = 'Enter a valid mobile number.';
+    }
+    return $errors;
+}
