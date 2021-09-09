@@ -8,3 +8,4 @@ check('local and international numbers are valid', isValidMobile('9866656576') &
 check('short numbers and letters are invalid', !isValidMobile('12345') && !isValidMobile('98a6656576') && !isValidMobile(''));
 check('ordinary names are valid', isValidName('Sajan Poudel') && isValidName("O'Neil") && isValidName('Anne-Marie'));
 check('digits and one letter names are invalid', !isValidName('Sajan 2') && !isValidName('S') && !isValidName(''));
+check('a good form has no errors', registrationErrors(['fname' => 'Sajan', 'email' => 's@example.com', 'mobno' => '9866656576']) === []);
