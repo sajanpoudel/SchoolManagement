@@ -127,9 +127,10 @@ function showSubject1($sid){
 	
 	$db = Database::getInstance();
 	$mysqli = $db->getConnection();
-	$query = "SELECT * FROM subject where subid='$sid' ";
-	$stmt= $mysqli->query($query);
-	return $stmt;
+	$stmt = $mysqli->prepare("SELECT * FROM subject where subid=?");
+	$stmt->bind_param('s',$sid);
+	$stmt->execute();
+	return $stmt->get_result();
 	
 }
 
