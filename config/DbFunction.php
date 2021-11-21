@@ -197,9 +197,10 @@ function showStudents1($id){
 	
 	$db = Database::getInstance();
 	$mysqli = $db->getConnection();
-	$query = "SELECT * FROM registration  where id='".$id."'";
-	$stmt= $mysqli->query($query);
-	return $stmt;
+	$stmt = $mysqli->prepare("SELECT * FROM registration where id=?");
+	$stmt->bind_param('s',$id);
+	$stmt->execute();
+	return $stmt->get_result();
 	
 }	
 
