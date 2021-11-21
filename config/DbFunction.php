@@ -95,9 +95,10 @@ function showCourse1($cid){
 	
 	$db = Database::getInstance();
 	$mysqli = $db->getConnection();
-	$query = "SELECT * FROM tbl_course  where cid='".$cid."'";
-	$stmt= $mysqli->query($query);
-	return $stmt;
+	$stmt = $mysqli->prepare("SELECT * FROM tbl_course where cid=?");
+	$stmt->bind_param('s',$cid);
+	$stmt->execute();
+	return $stmt->get_result();
 	
 }
 
