@@ -15,7 +15,7 @@ class DbFunction{
    else{		
 	$db = Database::getInstance();
 	$mysqli = $db->getConnection();
-	$query = "SELECT loginid, password FROM tbl_login where loginid=? and password=? ";
+	$query = "SELECT password FROM tbl_login where loginid=?";
 	$stmt= $mysqli->prepare($query);
 	if(false===$stmt){
 		
@@ -24,23 +24,34 @@ class DbFunction{
 	
 	else{
 		
-		$stmt->bind_param('ss',$loginid,$password);
+		$stmt->bind_param('s',$loginid);
 		$stmt->execute();
-		$stmt -> bind_result($loginid,$password);
+		$stmt->bind_result($storedPassword);
 		$rs=$stmt->fetch();
-		if(!$rs)
+		if(!$rs || !$this->passwordMatches($password,$storedPassword))
 		{
 			echo "<script>alert('Invalid Details')</script>";
 			header('location:login.php');
 		}
 		else{
 			
+			// Only a successful login may start the admin session
+			$_SESSION['login']=$loginid;
 			header('location:add-course.php');
+			exit;
 		}
 	}
 	
 	}
 	
+	}
+	
+	// Accepts bcrypt hashes and the plain text passwords already stored in tbl_login
+	private function passwordMatches($input,$stored){
+		if(strpos($stored,'$2y$')===0){
+			return password_verify($input,$stored);
+		}
+		return hash_equals($stored,$input);
 	}
 	
 	function create_course($cshort,$cfull,$cdate){

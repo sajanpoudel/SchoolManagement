@@ -4,7 +4,6 @@ if(isset($_POST['submit'])){
 	
 	 include('../config/DbFunction.php');
 	 $obj=new DbFunction();
-	 $_SESSION['login']=$_POST['id'];
 	 $obj->login($_POST['id'],$_POST['password']);
 }
 	
