@@ -2,6 +2,7 @@
 class Database {
 	private $_connection;
 	private static $_instance; //The single instance
+	// Defaults suit a local XAMPP setup. Set DB_HOST, DB_USER, DB_PASSWORD and DB_NAME to override them.
 	private $_host = "localhost";
 	private $_username = "root";
 	private $_password = "";
@@ -18,11 +19,15 @@ class Database {
 	}
 	// Constructor
 	public function __construct() {
+		$this->_host = getenv('DB_HOST') ?: $this->_host;
+		$this->_username = getenv('DB_USER') ?: $this->_username;
+		$this->_password = getenv('DB_PASSWORD') !== false ? getenv('DB_PASSWORD') : $this->_password;
+		$this->_database = getenv('DB_NAME') ?: $this->_database;
 		$this->_connection = new mysqli($this->_host, $this->_username,	$this->_password, $this->_database);
 	
 		// Error handling
 		if(mysqli_connect_error()) {
-			trigger_error("Failed to conencto to MySQL: " . mysqli_connect_error(),
+			trigger_error("Failed to connect to MySQL: " . mysqli_connect_error(),
 				 E_USER_ERROR);
 		}
 	}
