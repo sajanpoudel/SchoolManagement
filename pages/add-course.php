@@ -1,19 +1,19 @@
 
 
 <?php
-session_start ();
+session_start();
 
-if (! (isset ( $_SESSION ['login'] ))) {
-	
-	header ( 'location:../index.php' );
+if (! (isset($_SESSION ['login']))) {
+
+    header('location:../index.php');
 }
 
-if(isset($_POST['submit'])){
-	
-	include('../config/DbFunction.php');
-	$obj=new DbFunction();
-	$obj->create_course($_POST['course-short'],$_POST['course-full'],$_POST['cdate']);
-	
+if (isset($_POST['submit'])) {
+
+    include('../config/DbFunction.php');
+    $obj = new DbFunction();
+    $obj->create_course($_POST['course-short'], $_POST['course-full'], $_POST['cdate']);
+
 }
 
 ?>
