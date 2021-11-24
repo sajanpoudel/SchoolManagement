@@ -1,23 +1,23 @@
 <?php
-session_start ();
+session_start();
 include('../config/DbFunction.php');
-	$obj=new DbFunction();
-	$rs=$obj->showCourse();
-	$rs1=$obj->showCourse();
-if (! (isset ( $_SESSION ['login'] ))) {
-	
-	header ( 'location:../index.php' );
+$obj = new DbFunction();
+$rs = $obj->showCourse();
+$rs1 = $obj->showCourse();
+if (! (isset($_SESSION ['login']))) {
+
+    header('location:../index.php');
 }
-  if(isset($_POST['submit'])){
-	
-	$obj=new DbFunction();
-	
-	$obj->create_subject($_POST['course-short'],$_POST['course-full'],$_POST['sub1'],$_POST['sub2'],$_POST['sub3']);	
-	
+if (isset($_POST['submit'])) {
+
+    $obj = new DbFunction();
+
+    $obj->create_subject($_POST['course-short'], $_POST['course-full'], $_POST['sub1'], $_POST['sub2'], $_POST['sub3']);
+
 }
 
 
-	?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,7 +66,7 @@ if (! (isset ( $_SESSION ['login'] ))) {
 			<div class="col-lg-6">
 			<select class="form-control" name="course-short" id="cshort" onchange="courseAvailability()" required="required" >
 			<option VALUE="">SELECT</option>
-				<?php while($res=$rs->fetch_object()){?>							
+				<?php while ($res = $rs->fetch_object()) {?>							
 			
                         <option VALUE="<?php echo htmlentities($res->cid);?>"><?php echo htmlentities($res->cshort)?></option>
                         
@@ -87,7 +87,7 @@ if (! (isset ( $_SESSION ['login'] ))) {
 		<div class="col-lg-6">
 		<select class="form-control" name="course-full"  id="cfull"required="required" onchange="coursefullAvail()">
         <option VALUE="">SELECT</option>
-        <?php while($res1=$rs1->fetch_object()){?>							
+        <?php while ($res1 = $rs1->fetch_object()) {?>							
 			
      <option VALUE="<?php echo htmlentities($res1->cfull);?>"><?php echo htmlentities($res1->cfull)?></option>
                         
