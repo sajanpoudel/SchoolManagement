@@ -1,25 +1,25 @@
 
 
 <?php
-session_start ();
+session_start();
 include('../config/DbFunction.php');
- $obj=new DbFunction();
-if (! (isset ( $_SESSION ['login'] ))) {
-	
-	header ( 'location:../index.php' );
+$obj = new DbFunction();
+if (! (isset($_SESSION ['login']))) {
+
+    header('location:../index.php');
 }
 
-    $id=$_GET['cid'];
-   
-    $rs=$obj->showCourse1($id);
-    $res=$rs->fetch_object(); 
+$id = $_GET['cid'];
 
-if(isset($_POST['submit'])){
-	
-	 // echo  $id=$_GET['cid'];exit;
-		//echo $_POST['course-short'].$_POST['course-full'].$_POST['udate'].$id;exit;
-	$obj->edit_course($_POST['course-short'],$_POST['course-full'],$_POST['udate'],$id);
-	
+$rs = $obj->showCourse1($id);
+$res = $rs->fetch_object();
+
+if (isset($_POST['submit'])) {
+
+    // echo  $id=$_GET['cid'];exit;
+    //echo $_POST['course-short'].$_POST['course-full'].$_POST['udate'].$id;exit;
+    $obj->edit_course($_POST['course-short'], $_POST['course-full'], $_POST['udate'], $id);
+
 }
 
 ?>
