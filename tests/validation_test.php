@@ -10,3 +10,4 @@ check('ordinary names are valid', isValidName('Sajan Poudel') && isValidName("O'
 check('digits and one letter names are invalid', !isValidName('Sajan 2') && !isValidName('S') && !isValidName(''));
 check('a good form has no errors', registrationErrors(['fname' => 'Sajan', 'email' => 's@example.com', 'mobno' => '9866656576']) === []);
 check('an empty form has three errors', count(registrationErrors([])) === 3);
+check('only the bad field is reported', registrationErrors(['fname' => 'Sajan', 'email' => 'nope', 'mobno' => '9866656576']) === ['Enter a valid email address.']);
