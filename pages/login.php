@@ -1,12 +1,12 @@
-<?php 
+<?php
 session_start();
-if(isset($_POST['submit'])){
-	
-	 include('../config/DbFunction.php');
-	 $obj=new DbFunction();
-	 $obj->login($_POST['id'],$_POST['password']);
+if (isset($_POST['submit'])) {
+
+    include('../config/DbFunction.php');
+    $obj = new DbFunction();
+    $obj->login($_POST['id'], $_POST['password']);
 }
-	
+
 
 ?>
 <!DOCTYPE html>
