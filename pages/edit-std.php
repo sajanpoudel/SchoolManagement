@@ -1,33 +1,60 @@
 
 
 <?php
-session_start ();
+session_start();
 
-if (! (isset ( $_SESSION ['login'] ))) {
-	
-	header ( 'location:../index.php' );
+if (! (isset($_SESSION ['login']))) {
+
+    header('location:../index.php');
 }
 include('../config/DbFunction.php');
-	$obj=new DbFunction();
-	$id=$_GET['id'];
-    $rs=$obj->showStudents1($id);
-    $res=$rs->fetch_object(); 
-	$c=$res->course;
-    $cname=$obj->showCourse1($c);
-    $res1=$cname->fetch_object();
-	$rs1=$obj->showCourse();
-	$rs2=$obj->showCountry();
-	if(isset($_POST['submit'])){
-	
-     
-     $obj->edit_std($_POST['course-short'],$_POST['c-full'],$_POST['fname'],$_POST['mname'],$_POST['lname'],
-     	            $_POST['gender'],$_POST['gname'],$_POST['ocp'],$_POST['income'],$_POST['category'],$_POST['ph'],$_POST['nation']
+$obj = new DbFunction();
+$id = $_GET['id'];
+$rs = $obj->showStudents1($id);
+$res = $rs->fetch_object();
+$c = $res->course;
+$cname = $obj->showCourse1($c);
+$res1 = $cname->fetch_object();
+$rs1 = $obj->showCourse();
+$rs2 = $obj->showCountry();
+if (isset($_POST['submit'])) {
 
-     	             , $_POST['mobno'],$_POST['email'],$_POST['country'],$_POST['state'],$_POST['city'],$_POST['padd'],
-     	              $_POST['cadd'],$_POST['board1'],$_POST['board2'],$_POST['roll1'],$_POST['roll2'],$_POST['pyear1'],
-     	              $_POST['pyear2'],$_POST['sub1'],$_POST['sub2'],$_POST['marks1'],$_POST['marks2'],$_POST['fmarks1'],
-     	              $_POST['fmarks2'] ,$_GET['id']);
-	
+
+    $obj->edit_std(
+        $_POST['course-short'],
+        $_POST['c-full'],
+        $_POST['fname'],
+        $_POST['mname'],
+        $_POST['lname'],
+        $_POST['gender'],
+        $_POST['gname'],
+        $_POST['ocp'],
+        $_POST['income'],
+        $_POST['category'],
+        $_POST['ph'],
+        $_POST['nation'],
+        $_POST['mobno'],
+        $_POST['email'],
+        $_POST['country'],
+        $_POST['state'],
+        $_POST['city'],
+        $_POST['padd'],
+        $_POST['cadd'],
+        $_POST['board1'],
+        $_POST['board2'],
+        $_POST['roll1'],
+        $_POST['roll2'],
+        $_POST['pyear1'],
+        $_POST['pyear2'],
+        $_POST['sub1'],
+        $_POST['sub2'],
+        $_POST['marks1'],
+        $_POST['marks2'],
+        $_POST['fmarks1'],
+        $_POST['fmarks2'],
+        $_GET['id']
+    );
+
 }
 ?>
 <!DOCTYPE html>
@@ -77,13 +104,11 @@ include('../config/DbFunction.php');
 			<div class="col-lg-6">
 <select class="form-control" name="course-short" id="cshort"  onchange="showSub(this.value)" required="required" >			
 <option VALUE="<?php echo $res1->cid?>"><?php echo $res1->cshort?></option>
-				<?php while($res2=$rs1->fetch_object()){?>							
+				<?php while ($res2 = $rs1->fetch_object()) {?>							
 			
-                   <?php if($res2->cid==$res1->cid){
-				   continue;
-				   }else
-				   
-				   ?>                     
+                   <?php if ($res2->cid == $res1->cid) {
+                       continue;
+                   } else ?>                     
 					 <option VALUE="<?php echo htmlentities($res2->cid);?>"><?php echo htmlentities($res2->cshort)?></option>
                         
                         
@@ -168,22 +193,22 @@ include('../config/DbFunction.php');
 			
 			</div>
 			<div class="col-lg-4">
-			<?php 
-			if (strcasecmp($res->gender,"Male")==0){?>
+			<?php
+            if (strcasecmp($res->gender, "Male") == 0) {?>
 		 <input type="radio" name="gender" id="male" value="Male" required="required" checked> &nbsp; Male &nbsp;
-		 <?php }else{ ?>
+		 <?php } else { ?>
 		 <input type="radio" name="gender" id="male" value="Male" required="required"> &nbsp; Male &nbsp;
 		 <?php }?>
-		 <?php 
-			if (strcasecmp($res->gender,"female")==0){?>
+		 <?php
+            if (strcasecmp($res->gender, "female") == 0) {?>
 		 <input type="radio" name="gender" id="female" value="female" checked> &nbsp; Female &nbsp;
-		 <?php } else{?>
+		 <?php } else {?>
 		 <input type="radio" name="gender" id="female" value="female"> &nbsp; Female &nbsp;
 		 <?php }?>
-		 <?php 
-			if (strcasecmp($res->gender,"other")==0){?>
+		 <?php
+            if (strcasecmp($res->gender, "other") == 0) {?>
 		 <input type="radio" name="gender" id="other" value="other" checked> &nbsp; Other &nbsp;
-		 <?php } else{?>
+		 <?php } else {?>
 		 <input type="radio" name="gender" id="other" value="other"> &nbsp; Other &nbsp;
 		 <?php }?>
 			</div>
@@ -305,7 +330,7 @@ include('../config/DbFunction.php');
 			<select class="form-control" name="country" id="country" onchange="showState(this.value)"
 			required="required"  value="<?php echo htmlentities($res->country);?>">			
 <option VALUE="">Select Country</option>
-				<?php while($res3=$rs2->fetch_object()){?>							
+				<?php while ($res3 = $rs2->fetch_object()) {?>							
 			
    <option VALUE="<?php echo htmlentities($res3->id);?>"><?php echo htmlentities($res3->name)?></option>
                         
