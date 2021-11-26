@@ -1,24 +1,24 @@
 
 
 <?php
-session_start ();
+session_start();
 include('../config/DbFunction.php');
- $obj=new DbFunction();
-if (! (isset ( $_SESSION ['login'] ))) {
-	
-	header ( 'location:../index.php' );
+$obj = new DbFunction();
+if (! (isset($_SESSION ['login']))) {
+
+    header('location:../index.php');
 }
 
-    $id=$_GET['sid'];
-    
-    $rs=$obj->showSubject1($id);
-    $res=$rs->fetch_object(); 
+$id = $_GET['sid'];
 
-if(isset($_POST['submit'])){
-	
-		$id=$_GET['sid'];
-	$obj->edit_subject($_POST['sub1'],$_POST['sub2'],$_POST['sub3'],$_POST['udate'],$id);
-	
+$rs = $obj->showSubject1($id);
+$res = $rs->fetch_object();
+
+if (isset($_POST['submit'])) {
+
+    $id = $_GET['sid'];
+    $obj->edit_subject($_POST['sub1'], $_POST['sub2'], $_POST['sub3'], $_POST['udate'], $id);
+
 }
 
 ?>
