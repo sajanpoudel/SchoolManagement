@@ -1,30 +1,57 @@
 
 
 <?php
-session_start ();
+session_start();
 
-if (! (isset ( $_SESSION ['login'] ))) {
-	
-	header ( 'location:../index.php' );
+if (! (isset($_SESSION ['login']))) {
+
+    header('location:../index.php');
 }
 include('../config/DbFunction.php');
-	$obj=new DbFunction();
-	$rs=$obj->showCourse();
-	$rs1=$obj->showCountry();
-	$ses=$obj->showSession();
-	$res1=$ses->fetch_object();
-	//$res1->session;
-	if(isset($_POST['submit'])){
-	
-     
-     $obj->register($_POST['course-short'],$_POST['c-full'],$_POST['fname'],$_POST['mname'],$_POST['lname'],
-     	            $_POST['gname'],$_POST['ocp'],$_POST['gender'],$_POST['income'],$_POST['category'],$_POST['ph'],$_POST['nation']
+$obj = new DbFunction();
+$rs = $obj->showCourse();
+$rs1 = $obj->showCountry();
+$ses = $obj->showSession();
+$res1 = $ses->fetch_object();
+//$res1->session;
+if (isset($_POST['submit'])) {
 
-     	             , $_POST['mobno'],$_POST['email'],$_POST['country'],$_POST['state'],$_POST['city'],$_POST['padd'],
-     	              $_POST['cadd'],$_POST['board1'],$_POST['board2'],$_POST['roll1'],$_POST['roll2'],$_POST['pyear1'],
-     	              $_POST['pyear2'],$_POST['sub1'],$_POST['sub2'],$_POST['marks1'],$_POST['marks2'],$_POST['fmarks1'],
-     	              $_POST['fmarks2'] ,$_POST['session']);
-	
+
+    $obj->register(
+        $_POST['course-short'],
+        $_POST['c-full'],
+        $_POST['fname'],
+        $_POST['mname'],
+        $_POST['lname'],
+        $_POST['gname'],
+        $_POST['ocp'],
+        $_POST['gender'],
+        $_POST['income'],
+        $_POST['category'],
+        $_POST['ph'],
+        $_POST['nation'],
+        $_POST['mobno'],
+        $_POST['email'],
+        $_POST['country'],
+        $_POST['state'],
+        $_POST['city'],
+        $_POST['padd'],
+        $_POST['cadd'],
+        $_POST['board1'],
+        $_POST['board2'],
+        $_POST['roll1'],
+        $_POST['roll2'],
+        $_POST['pyear1'],
+        $_POST['pyear2'],
+        $_POST['sub1'],
+        $_POST['sub2'],
+        $_POST['marks1'],
+        $_POST['marks2'],
+        $_POST['fmarks1'],
+        $_POST['fmarks2'],
+        $_POST['session']
+    );
+
 }
 ?>
 <!DOCTYPE html>
@@ -73,7 +100,7 @@ include('../config/DbFunction.php');
 			<div class="col-lg-6">
 <select class="form-control" name="course-short" id="cshort"  onchange="showSub(this.value)" required="required" >			
 <option VALUE="">SELECT</option>
-				<?php while($res=$rs->fetch_object()){?>							
+				<?php while ($res = $rs->fetch_object()) {?>							
 			
                         <option VALUE="<?php echo htmlentities($res->cid);?>"><?php echo htmlentities($res->cshort)?></option>
                         
@@ -276,7 +303,7 @@ include('../config/DbFunction.php');
 			<div class="col-lg-4">
 			<select class="form-control" name="country" id="country" onchange="showState(this.value)" required="required" >			
 <option VALUE="">Select Country</option>
-				<?php while($res=$rs1->fetch_object()){?>							
+				<?php while ($res = $rs1->fetch_object()) {?>							
 			
    <option VALUE="<?php echo htmlentities($res->id);?>"><?php echo htmlentities($res->name)?></option>
                         
