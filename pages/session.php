@@ -1,14 +1,14 @@
 <?php
-session_start ();
+session_start();
 
-if (! (isset ( $_SESSION ['login'] ))) {
-	
-	header ( 'location:../index.php' );
-} 
-   
-    include('../config/DbFunction.php');
-    $obj=new DbFunction();
-	$rs=$obj->showSession();
+if (! (isset($_SESSION ['login']))) {
+
+    header('location:../index.php');
+}
+
+include('../config/DbFunction.php');
+$obj = new DbFunction();
+$rs = $obj->showSession();
 ?> 
 
 <!DOCTYPE html>
@@ -67,9 +67,9 @@ if (! (isset ( $_SESSION ['login'] ))) {
 			
 			</div>
                   <div class="col-lg-4">
-				  <?php while($res=$rs->fetch_object()){
-				   if($res->status==1){
-				  ?>
+				  <?php while ($res = $rs->fetch_object()) {
+				      if ($res->status == 1) {
+				          ?>
 		 <input type="radio" name="gender" id="male" value="<?php echo $res->session;?>" checked required="required">
 		 &nbsp;&nbsp;<?php echo $res->session;?> <br>
 		<?php  } ?>
