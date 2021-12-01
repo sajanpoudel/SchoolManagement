@@ -1,23 +1,22 @@
 <?php
-session_start ();
+session_start();
 
-if (! (isset ( $_SESSION ['login'] ))) {
-	
-	header ( 'location:../index.php' );
-} 
-   
-    include('../config/DbFunction.php');
-    $obj=new DbFunction();
-	$rs=$obj->showCourse();
+if (! (isset($_SESSION ['login']))) {
+
+    header('location:../index.php');
+}
+
+include('../config/DbFunction.php');
+$obj = new DbFunction();
+$rs = $obj->showCourse();
 
 
-	if(isset($_GET['del']))
-    {
-           
-          $obj->del_course(intval($_GET['del']));
-          
-       
-  }
+if (isset($_GET['del'])) {
+
+    $obj->del_course(intval($_GET['del']));
+
+
+}
 
 ?> 
 
@@ -81,12 +80,12 @@ if (! (isset ( $_SESSION ['login'] ))) {
                                     </thead>
                                     <tbody>
 
-                                    <?php 
-                                         $sn=1;
-                                     while($res=$rs->fetch_object()){?>	
+                                    <?php
+                                         $sn = 1;
+while ($res = $rs->fetch_object()) {?>	
                                         <tr class="odd gradeX">
                                             <td><?php echo $sn?></td>
-                                            <td><?php echo htmlentities( strtoupper($res->cshort));?></td>
+                                            <td><?php echo htmlentities(strtoupper($res->cshort));?></td>
                                             <td><?php echo htmlentities(strtoupper($res->cfull));?></td>
                                             <td><?php echo htmlentities($res->cdate);?></td>
                                              <td>&nbsp;&nbsp;<a href="edit-course.php?cid=<?php echo htmlentities($res->cid);?>"><p class="fa fa-edit"></p></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -94,7 +93,8 @@ if (! (isset ( $_SESSION ['login'] ))) {
                                             
                                         </tr>
                                         
-                                    <?php $sn++;}?>   	           
+                                    <?php $sn++;
+}?>   	           
                                     </tbody>
                                 </table>
                             </div>
