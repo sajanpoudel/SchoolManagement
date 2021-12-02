@@ -1,24 +1,25 @@
 <?php
+
 // Run with: php tests/password_matches_test.php
 require __DIR__ . '/../config/DbFunction.php';
 
 $obj = new DbFunction();
 $method = new ReflectionMethod('DbFunction', 'passwordMatches');
 if (PHP_VERSION_ID < 80100) {
-	$method->setAccessible(true);
+    $method->setAccessible(true);
 }
 $check = function ($input, $stored) use ($obj, $method) {
-	return $method->invoke($obj, $input, $stored);
+    return $method->invoke($obj, $input, $stored);
 };
 
 $failures = 0;
 $expect = function ($label, $actual, $expected) use (&$failures) {
-	if ($actual !== $expected) {
-		echo "FAIL: $label\n";
-		$failures++;
-	} else {
-		echo "ok:   $label\n";
-	}
+    if ($actual !== $expected) {
+        echo "FAIL: $label\n";
+        $failures++;
+    } else {
+        echo "ok:   $label\n";
+    }
 };
 
 $expect('plain text password matches', $check('admin', 'admin'), true);
