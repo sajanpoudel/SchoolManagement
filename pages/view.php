@@ -1,21 +1,20 @@
 <?php
-session_start ();
+session_start();
 
-if (! (isset ( $_SESSION ['login'] ))) {
-	
-	header ( 'location:../index.php' );
-} 
-   
-    include('../config/DbFunction.php');
-    $obj=new DbFunction();
-	$rs=$obj->showstudents();
-   
+if (! (isset($_SESSION ['login']))) {
 
-	if(isset($_GET['del']))
-    {    
-         
-		  $obj->del_std(intval($_GET['del']));
-    }
+    header('location:../index.php');
+}
+
+include('../config/DbFunction.php');
+$obj = new DbFunction();
+$rs = $obj->showstudents();
+
+
+if (isset($_GET['del'])) {
+
+    $obj->del_std(intval($_GET['del']));
+}
 
 ?> 
 
@@ -82,18 +81,18 @@ if (! (isset ( $_SESSION ['login'] ))) {
                                     </thead>
                                     <tbody>
 
-                                    <?php 
-                                         $sn=1;
-                                     while($res=$rs->fetch_object()){
-									 
-	                                  $c=$res->course;
-									  $cname=$obj->showCourse1($c);
-									  $res1=$cname->fetch_object();
-									  
-									 ?>	
+                                    <?php
+                                         $sn = 1;
+while ($res = $rs->fetch_object()) {
+
+    $c = $res->course;
+    $cname = $obj->showCourse1($c);
+    $res1 = $cname->fetch_object();
+
+    ?>	
                                         <tr class="odd gradeX">
                               <td><?php echo $sn?></td>
-                              <td><?php echo htmlentities( strtoupper($res->regno));?></td>
+                              <td><?php echo htmlentities(strtoupper($res->regno));?></td>
              <td><?php echo htmlentities(strtoupper($res->fname." ".$res->mname." ".$res->lname));?></td>
        <td><?php echo htmlentities(strtoupper($res->emailid));?></td>
 	  <td><?php echo htmlentities($res->mobno);?></td>
@@ -108,7 +107,8 @@ if (! (isset ( $_SESSION ['login'] ))) {
                                             
                                         </tr>
                                         
-                                    <?php $sn++;}?>   	           
+                                    <?php $sn++;
+}?>   	           
                                     </tbody>
                                 </table>
                             </div>
