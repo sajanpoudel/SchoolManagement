@@ -7,6 +7,7 @@ $rs1 = $obj->showCourse();
 if (! (isset($_SESSION ['login']))) {
 
     header('location:../index.php');
+    exit;
 }
 if (isset($_POST['submit'])) {
 
