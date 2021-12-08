@@ -7,6 +7,7 @@ $obj = new DbFunction();
 if (! (isset($_SESSION ['login']))) {
 
     header('location:../index.php');
+    exit;
 }
 
 $id = $_GET['sid'];
