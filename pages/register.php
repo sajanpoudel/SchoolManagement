@@ -6,6 +6,7 @@ session_start();
 if (! (isset($_SESSION ['login']))) {
 
     header('location:../index.php');
+    exit;
 }
 include('../config/DbFunction.php');
 $obj = new DbFunction();
