@@ -71,7 +71,7 @@ $rs = $obj->showSession();
 				  <?php while ($res = $rs->fetch_object()) {
 				      if ($res->status == 1) {
 				          ?>
-		 <input type="radio" name="gender" id="male" value="<?php echo $res->session;?>" checked required="required">
+		 <input type="radio" name="gender" id="male" value="<?php echo htmlentities($res->session);?>" checked required="required">
 		 &nbsp;&nbsp;<?php echo $res->session;?> <br>
 		<?php  } ?>
 		
