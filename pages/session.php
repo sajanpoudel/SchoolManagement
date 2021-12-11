@@ -76,7 +76,7 @@ $rs = $obj->showSession();
 		<?php  } ?>
 		
 		 <input type="radio" name="gender" id="male" value="<?php echo htmlentities($res->session);?>" checked required="required">
-		 &nbsp;&nbsp;<?php echo $res->session;?> <br>
+		 &nbsp;&nbsp;<?php echo htmlentities($res->session);?> <br>
 		 
 		 <?php }?>
 			</div>         
