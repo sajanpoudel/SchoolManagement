@@ -98,7 +98,7 @@ if (isset($_POST['submit'])) {
 		<label>Course Full Name<span id="" style="font-size:11px;color:red">*</span></label>
 		</div>
 		<div class="col-lg-6">
-<input class="form-control" name="course-full" id="cfull" value="<?php echo $res->cfull;?>" required="required"  onblur="coursefullAvail()">         
+<input class="form-control" name="course-full" id="cfull" value="<?php echo htmlentities($res->cfull);?>" required="required"  onblur="coursefullAvail()">         
 	<span id="course-status" style="font-size:12px;"></span>				</div>
 	 </div>	
 										
