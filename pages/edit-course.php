@@ -86,7 +86,7 @@ if (isset($_POST['submit'])) {
 											</div>
 											<div class="col-lg-6">
 			
-  <input class="form-control" name="course-short" id="cshort"  value="<?php echo $res->cshort;?>" required="required"  onblur="courseAvailability()">       
+  <input class="form-control" name="course-short" id="cshort"  value="<?php echo htmlentities($res->cshort);?>" required="required"  onblur="courseAvailability()">       
 							<span id="course-availability-status" style="font-size:12px;"></span>				</div>
 											
 										</div>	
