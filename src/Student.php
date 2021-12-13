@@ -45,3 +45,18 @@ function studentFromPost(array $post)
     }
     return $student;
 }
+
+/** An INSERT statement with one placeholder per column. The names come from code, never from a visitor. */
+function buildInsertSql($table, array $columns)
+{
+    $names = implode(', ', array_map(function ($c) { return "`$c`"; }, $columns));
+    $marks = implode(', ', array_fill(0, count($columns), '?'));
+    return "INSERT INTO `$table` ($names) VALUES ($marks)";
+}
+
+/** An UPDATE statement for the given columns that selects the row with the id column. */
+function buildUpdateSql($table, array $columns, $idColumn)
+{
+    $sets = implode(', ', array_map(function ($c) { return "`$c`=?"; }, $columns));
+    return "UPDATE `$table` SET $sets WHERE `$idColumn`=?";
+}

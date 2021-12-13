@@ -13,3 +13,7 @@ check('the second roll maps to roll1', $student['roll'] === '12' && $student['ro
 check('the second year maps to yop1', $student['pyear'] === '2014' && $student['yop1'] === '2016');
 check('the physically challenged field maps to pchal', $student['pchal'] === 'no');
 check('missing fields are empty', $student['mname'] === '');
+
+check('an insert has a placeholder per column', buildInsertSql('t', ['a', 'b']) === 'INSERT INTO `t` (`a`, `b`) VALUES (?, ?)');
+check('an update sets every column and selects by id', buildUpdateSql('t', ['a', 'b'], 'id') === 'UPDATE `t` SET `a`=?, `b`=? WHERE `id`=?');
+check('the insert for students has as many marks as fields', substr_count(buildInsertSql('registration', array_keys(STUDENT_FIELDS)), '?') === count(STUDENT_FIELDS));
