@@ -9,6 +9,7 @@ if (! (isset($_SESSION ['login']))) {
     exit;
 }
 include('../config/DbFunction.php');
+include('../src/Validation.php');
 $obj = new DbFunction();
 $rs = $obj->showCourse();
 $rs1 = $obj->showCountry();
