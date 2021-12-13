@@ -14,3 +14,9 @@
 | `pages/dbcontroller.php` | PDO connection used by the ajax helpers |
 
 Every page except `login.php` and the ajax helpers checks `$_SESSION['login']` and redirects to `index.php` when it is missing.
+
+## Helper code
+
+- `src/Grades.php`: `percentage()`, `gradeFor()`, `hasPassed()` and `summarize()` for marksheets.
+- `src/Validation.php`: checks for the registration form.
+- `tests/`: run everything with `php tests/run.php`.
