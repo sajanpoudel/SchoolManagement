@@ -1,4 +1,7 @@
 <?php
+session_start();
+require_once('../src/Auth.php');
+requireLoginAjax();
 require_once('../config/Database.php');
 
 $mysqli = Database::getInstance()->getConnection();
