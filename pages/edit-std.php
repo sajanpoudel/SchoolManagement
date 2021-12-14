@@ -10,9 +10,13 @@ if (! (isset($_SESSION ['login']))) {
 }
 include('../config/DbFunction.php');
 $obj = new DbFunction();
-$id = $_GET['id'];
+$id = intval($_GET['id'] ?? 0);
 $rs = $obj->showStudents1($id);
 $res = $rs->fetch_object();
+if (!$res) {
+    header('location:view.php');
+    exit;
+}
 $c = $res->course;
 $cname = $obj->showCourse1($c);
 $res1 = $cname->fetch_object();
@@ -53,7 +57,7 @@ if (isset($_POST['submit'])) {
         $_POST['marks2'],
         $_POST['fmarks1'],
         $_POST['fmarks2'],
-        $_GET['id']
+        $id
     );
 
 }
