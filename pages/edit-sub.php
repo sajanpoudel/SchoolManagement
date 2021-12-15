@@ -95,7 +95,7 @@ if (isset($_POST['submit'])) {
 		<label>Subject2</label>
 		</div>
 		<div class="col-lg-6">
-<input class="form-control" name="sub2" id="sub2" value="<?php echo $res->sub2;?>" required="required">         
+<input class="form-control" name="sub2" id="sub2" value="<?php echo htmlentities($res->sub2);?>" required="required">         
 		</div>
 	 </div>	
 										
