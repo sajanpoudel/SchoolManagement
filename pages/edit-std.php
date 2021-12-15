@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
 			</div>
 			<div class="col-lg-6">
 <select class="form-control" name="course-short" id="cshort"  onchange="showSub(this.value)" required="required" >			
-<option VALUE="<?php echo $res1->cid?>"><?php echo $res1->cshort?></option>
+<option VALUE="<?php echo htmlentities($res1->cid)?>"><?php echo htmlentities($res1->cshort)?></option>
 				<?php while ($res2 = $rs1->fetch_object()) {?>							
 			
                    <?php if ($res2->cid == $res1->cid) {
