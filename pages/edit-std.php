@@ -125,7 +125,7 @@ if (isset($_POST['submit'])) {
 		<label>Select Subject<span id="" style="font-size:11px;color:red">*</span></label>
 		</div>
 		<div class="col-lg-6">
- <input class="form-control" name="c-full"  id="c-full"  value="<?php echo $res->subject;?>">
+ <input class="form-control" name="c-full"  id="c-full"  value="<?php echo htmlentities($res->subject);?>">
        </select>
 	</div>
 	 </div>	
