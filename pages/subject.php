@@ -36,7 +36,7 @@ if (!empty($_POST["cid"])) {
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-        echo strtoupper($row['sub1']."+".$row['sub2']."+ ".$row['sub3']);
+        echo htmlentities(strtoupper($row['sub1']."+".$row['sub2']."+ ".$row['sub3']));
 
     }
 
