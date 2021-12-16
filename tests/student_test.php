@@ -17,3 +17,11 @@ check('missing fields are empty', $student['mname'] === '');
 check('an insert has a placeholder per column', buildInsertSql('t', ['a', 'b']) === 'INSERT INTO `t` (`a`, `b`) VALUES (?, ?)');
 check('an update sets every column and selects by id', buildUpdateSql('t', ['a', 'b'], 'id') === 'UPDATE `t` SET `a`=?, `b`=? WHERE `id`=?');
 check('the insert for students has as many marks as fields', substr_count(buildInsertSql('registration', array_keys(STUDENT_FIELDS)), '?') === count(STUDENT_FIELDS));
+
+// The column names must exist in the table of the database dump.
+$dump = file_get_contents(__DIR__ . '/../schoolmanagement.sql');
+preg_match('/CREATE TABLE `registration` \((.*?)\) ENGINE/s', $dump, $table);
+preg_match_all('/^\s+`(\w+)` /m', $table[1], $found);
+foreach (array_merge(array_keys(STUDENT_FIELDS), ['session', 'regno']) as $column) {
+    check("the column $column exists in the registration table", in_array($column, $found[1], true));
+}
