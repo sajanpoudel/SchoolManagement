@@ -21,7 +21,7 @@ if (!empty($_POST['cshort1'])) {
     $cshort = $_POST['cshort1'];
     $result = "SELECT count(*) FROM  subject WHERE cshort=?";
     $stmt = $mysqli->prepare($result);
-    $stmt->bind_param('i', $cshort);
+    $stmt->bind_param('s', $cshort);
     $stmt->execute();
     $stmt->bind_result($count);
     $stmt->fetch();
