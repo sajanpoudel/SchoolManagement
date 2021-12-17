@@ -16,7 +16,11 @@ $rs1 = $obj->showCountry();
 $ses = $obj->showSession();
 $res1 = $ses->fetch_object();
 //$res1->session;
-if (isset($_POST['submit'])) {
+$formErrors = isset($_POST['submit']) ? registrationErrors($_POST) : [];
+if (isset($_POST['submit']) && !empty($formErrors)) {
+    echo "<script>alert('" . addslashes(implode(' ', $formErrors)) . "')</script>";
+}
+if (isset($_POST['submit']) && empty($formErrors)) {
 
 
     $obj->register(
