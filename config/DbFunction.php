@@ -1,5 +1,6 @@
 <?php
-require('Database.php');
+require_once('Database.php');
+require_once(__DIR__ . '/../src/Student.php');
 class DbFunction
 {
     /** The shared mysqli connection. */
@@ -235,92 +236,20 @@ class DbFunction
 
     }
 
-    /** Saves a new student registration and shows the generated registration number. */
-    public function register(
-        $cshort,
-        $cfull,
-        $fname,
-        $mname,
-        $lname,
-        $gender,
-        $gname,
-        $ocp,
-        $income,
-        $category,
-        $ph,
-        $nation,
-        $mobno,
-        $email,
-        $country,
-        $state,
-        $city,
-        $padd,
-        $cadd,
-        $board1,
-        $board2,
-        $roll1,
-        $roll2,
-        $pyear1,
-        $pyear2,
-        $sub1,
-        $sub2,
-        $marks1,
-        $marks2,
-        $fmarks1,
-        $fmarks2,
-        $session
-    ) {
+    /**
+     * Saves a new student registration and shows the generated registration number.
+     * $student is the result of studentFromPost().
+     */
+    public function register(array $student, $session)
+    {
+        $columns = array_merge(array_keys($student), ['session', 'regno']);
+        $reg = random_int(100000, 2147483647);
+        $values = array_merge(array_values($student), [$session, $reg]);
 
-
-        $query = "INSERT INTO `registration` (`course`, `subject`, `fname`, `mname`, `lname`, `gender`, `gname`, `ocp`,
-                     `income`, `category`, `pchal`, `nationality`, `mobno`, `emailid`, `country`, `state`, `dist`, 
-					 `padd`, `cadd`, `board`, `board1`,`roll`,`roll1`,`pyear`,`yop1`,`sub`,`sub1`,`marks`,`marks1`,
-					 `fmarks`,`fmarks1`,`session`,regno) 
-                   VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        $reg = rand();
-        $stmt = $this->prepare($query);
-
-        $stmt->bind_param(
-            'sssssssssssssssssssssssssssssssss',
-            $cshort,
-            $cfull,
-            $fname,
-            $mname,
-            $lname,
-            $gender,
-            $gname,
-            $ocp,
-            $income,
-            $category,
-            $ph,
-            $nation,
-            $mobno,
-            $email,
-            $country,
-            $state,
-            $city,
-            $padd,
-            $cadd,
-            $board1,
-            $board2,
-            $roll1,
-            $roll2,
-            $pyear1,
-            $pyear2,
-            $sub1,
-            $sub2,
-            $marks1,
-            $marks2,
-            $fmarks1,
-            $fmarks2,
-            $session,
-            $reg
-        );
+        $stmt = $this->prepare(buildInsertSql('registration', $columns));
+        $stmt->bind_param(str_repeat('s', count($values)), ...$values);
         $stmt->execute();
         $this->alert("Successfully registered, your registration number is $reg");
-
-
-
     }
 
 
@@ -349,95 +278,16 @@ class DbFunction
 
     }
 
-    /** Updates every field of a student record. */
-    public function edit_std(
-        $cshort,
-        $cfull,
-        $fname,
-        $mname,
-        $lname,
-        $gender,
-        $gname,
-        $ocp,
-        $income,
-        $category,
-        $ph,
-        $nation,
-        $mobno,
-        $email,
-        $country,
-        $state,
-        $city,
-        $padd,
-        $cadd,
-        $board1,
-        $board2,
-        $roll1,
-        $roll2,
-        $pyear1,
-        $pyear2,
-        $sub1,
-        $sub2,
-        $marks1,
-        $marks2,
-        $fmarks1,
-        $fmarks2,
-        $id
-    ) {
-        $query = "update registration set course=?,subject=?,fname=?,mname=?,lname=?,gender=?,gname=?,ocp=?
-              , income=?,category=?,pchal=?,nationality=?,mobno=?,emailid=?,country=?,state=?,dist=?
-         	 ,padd=?,cadd=?,board=?,roll=?,pyear=?,sub=?,marks=?,fmarks=?,board1=?,roll1=?,yop1=?,sub1=?
-              ,marks1=?,fmarks1=? where id=?" ;
-        $stmt = $this->prepare($query);
-
-        $rc = $stmt->bind_param(
-            'sssssssssssssssssssssssssssssssi',
-            $cshort,
-            $cfull,
-            $fname,
-            $mname,
-            $lname,
-            $gender,
-            $gname,
-            $ocp,
-            $income,
-            $category,
-            $ph,
-            $nation,
-            $mobno,
-            $email,
-            $country,
-            $state,
-            $city,
-            $padd,
-            $cadd,
-            $board1,
-            $board2,
-            $roll1,
-            $roll2,
-            $pyear1,
-            $pyear2,
-            $sub1,
-            $sub2,
-            $marks1,
-            $marks2,
-            $fmarks1,
-            $fmarks2,
-            $id
-        );
-
-        if (false === $rc) {
-
-            die('bind_param() failed: ' . htmlspecialchars($stmt->error));
-        }
-        $rc = $stmt->execute();
-
-        if (false == $rc) {
+    /** Updates every field of a student record. $student is the result of studentFromPost(). */
+    public function edit_std(array $student, $id)
+    {
+        $stmt = $this->prepare(buildUpdateSql('registration', array_keys($student), 'id'));
+        $values = array_merge(array_values($student), [(int) $id]);
+        $stmt->bind_param(str_repeat('s', count($student)) . 'i', ...$values);
+        if (!$stmt->execute()) {
             die('execute() failed: ' . htmlspecialchars($stmt->error));
-        } else {
-            $this->alert('Successfully Updated');
         }
-
+        $this->alert('Successfully Updated');
     }
 
 

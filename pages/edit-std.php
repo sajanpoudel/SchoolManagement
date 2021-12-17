@@ -9,6 +9,7 @@ if (! (isset($_SESSION ['login']))) {
     exit;
 }
 include('../config/DbFunction.php');
+include_once('../src/Student.php');
 $obj = new DbFunction();
 $id = intval($_GET['id'] ?? 0);
 $rs = $obj->showStudents1($id);
@@ -25,40 +26,7 @@ $rs2 = $obj->showCountry();
 if (isset($_POST['submit'])) {
 
 
-    $obj->edit_std(
-        $_POST['course-short'],
-        $_POST['c-full'],
-        $_POST['fname'],
-        $_POST['mname'],
-        $_POST['lname'],
-        $_POST['gender'],
-        $_POST['gname'],
-        $_POST['ocp'],
-        $_POST['income'],
-        $_POST['category'],
-        $_POST['ph'],
-        $_POST['nation'],
-        $_POST['mobno'],
-        $_POST['email'],
-        $_POST['country'],
-        $_POST['state'],
-        $_POST['city'],
-        $_POST['padd'],
-        $_POST['cadd'],
-        $_POST['board1'],
-        $_POST['board2'],
-        $_POST['roll1'],
-        $_POST['roll2'],
-        $_POST['pyear1'],
-        $_POST['pyear2'],
-        $_POST['sub1'],
-        $_POST['sub2'],
-        $_POST['marks1'],
-        $_POST['marks2'],
-        $_POST['fmarks1'],
-        $_POST['fmarks2'],
-        $id
-    );
+    $obj->edit_std(studentFromPost($_POST), $id);
 
 }
 ?>
