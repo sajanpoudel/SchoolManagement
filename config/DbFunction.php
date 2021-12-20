@@ -5,6 +5,10 @@ require('Database.php');
 //$mysqli = $db->getConnection();
 class DbFunction
 {
+    /**
+     * Checks the login id and password of the admin.
+     * On success it starts the session and redirects to add-course.php.
+     */
     public function login($loginid, $password)
     {
 
