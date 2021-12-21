@@ -56,6 +56,7 @@ class DbFunction
         return hash_equals($stored, $input);
     }
 
+    /** Inserts a new course after checking that both names were given. */
     public function create_course($cshort, $cfull, $cdate)
     {
 
