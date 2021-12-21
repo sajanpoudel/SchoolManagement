@@ -89,6 +89,7 @@ class DbFunction
         }
     }
 
+    /** Returns every course as a mysqli result. */
     public function showCourse()
     {
 
