@@ -47,6 +47,7 @@ class DbFunction
     }
 
     // Accepts bcrypt hashes and the plain text passwords already stored in tbl_login
+    /** Compares a typed password with a stored bcrypt hash or plain text value. */
     private function passwordMatches($input, $stored)
     {
         if (strpos($stored, '$2y$') === 0) {
