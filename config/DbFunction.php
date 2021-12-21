@@ -101,6 +101,7 @@ class DbFunction
 
     }
 
+    /** Returns the course with the given id. */
     public function showCourse1($cid)
     {
 
