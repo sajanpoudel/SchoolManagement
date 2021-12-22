@@ -139,6 +139,7 @@ class DbFunction
 
     }
 
+    /** Returns the subject row with the given id. */
     public function showSubject1($sid)
     {
 
