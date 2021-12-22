@@ -153,6 +153,7 @@ class DbFunction
     }
 
 
+    /** Inserts the three subjects of a course. */
     public function create_subject($cshort, $cfull, $sub1, $sub2, $sub3)
     {
 
