@@ -114,6 +114,7 @@ class DbFunction
 
     }
 
+    /** Returns every subject row as a mysqli result. */
     public function showSubject()
     {
 
