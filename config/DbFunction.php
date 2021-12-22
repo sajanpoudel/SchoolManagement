@@ -127,6 +127,7 @@ class DbFunction
     }
 
 
+    /** Returns every academic session. */
     public function showSession()
     {
 
