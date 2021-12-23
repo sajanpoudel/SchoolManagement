@@ -210,6 +210,7 @@ class DbFunction
 
     }
 
+    /** Returns the student with the given id. */
     public function showStudents1($id)
     {
 
