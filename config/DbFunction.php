@@ -187,6 +187,7 @@ class DbFunction
     }
 
 
+    /** Returns the list of countries for the registration form. */
     public function showCountry()
     {
 
