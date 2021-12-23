@@ -198,6 +198,7 @@ class DbFunction
         return $stmt;
 
     }
+    /** Returns every registered student. */
     public function showStudents()
     {
 
