@@ -223,6 +223,7 @@ class DbFunction
 
     }
 
+    /** Saves a new student registration and shows the generated registration number. */
     public function register(
         $cshort,
         $cfull,
