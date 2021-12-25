@@ -340,6 +340,7 @@ class DbFunction
     }
 
 
+    /** Updates the three subjects of a course. */
     public function edit_subject($sub1, $sub2, $sub3, $udate, $id)
     {
 
