@@ -356,6 +356,7 @@ class DbFunction
 
     }
 
+    /** Updates every field of a student record. */
     public function edit_std(
         $cshort,
         $cfull,
