@@ -322,6 +322,7 @@ class DbFunction
     }
 
 
+    /** Updates the names of a course and stamps the update date. */
     public function edit_course($cshort, $cfull, $udate, $id)
     {
 
