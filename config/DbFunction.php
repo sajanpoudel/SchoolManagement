@@ -459,6 +459,7 @@ class DbFunction
     }
 
 
+    /** Deletes a course and sends the browser back to the course list. */
     public function del_course($id)
     {
 
