@@ -474,6 +474,7 @@ class DbFunction
         echo "<script>window.location.href='view-course.php'</script>";
     }
 
+    /** Deletes a student record. */
     public function del_std($id)
     {
 
