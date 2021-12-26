@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Single shared MySQL connection (singleton).
+ * Settings come from DB_HOST, DB_USER, DB_PASSWORD and DB_NAME with XAMPP defaults.
+ */
 class Database
 {
     private $_connection;
