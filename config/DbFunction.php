@@ -489,6 +489,7 @@ class DbFunction
 
     }
 
+    /** Deletes a subject row. */
     public function del_subject($id)
     {
 
