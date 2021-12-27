@@ -17,6 +17,7 @@ class Database
     Get an instance of the Database
     @return Instance
     */
+    /** Returns the one Database instance, creating it on first use. */
     public static function getInstance()
     {
         if (!self::$_instance) { // If no instance then make one
