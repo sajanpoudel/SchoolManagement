@@ -47,6 +47,7 @@ class Database
     {
     }
     // Get mysqli connection
+    /** Returns the underlying mysqli connection. */
     public function getConnection()
     {
         return $this->_connection;
