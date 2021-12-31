@@ -35,3 +35,8 @@ php tests/password_matches_test.php
 
 - Passwords in `tbl_login` can be plain text or bcrypt hashes. Store a hash created with `password_hash()` to stop keeping plain text.
 - The admin session starts only after the login id and password have been checked.
+
+**DOCS**
+
+- [Pages](docs/pages.md)
+- [Database](docs/database.md)
