@@ -1,4 +1,5 @@
 SCHOOL MANAGEMENT WEB APPLICATION IN PHP
+
 This is a complete school management web application
 
 **CONTAINS**
